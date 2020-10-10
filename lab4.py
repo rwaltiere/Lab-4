@@ -50,7 +50,29 @@ def switch_lights(board, row, column):
             board[1][4] = not detect_on_off(board, 0, 1)
               
         else:
-            pass
+            board[0][column] = not detect_on_off(board, 0, 1)
+            board[0][column - 1] = not detect_on_off(board, 0, 1)
+            board[0][column + 1] = not detect_on_off(board, 0, 1)
+            board[1][column] = not detect_on_off(board, 0, 1)
+            
+    if bool_list[1]:
+        if bool_list[2]:
+            board[4][0] = not detect_on_off(board, 0, 0)
+            board[4][1] = not detect_on_off(board, 0, 1)
+            board[3][0] = not detect_on_off(board, 0, 2)
+ 
+        elif bool_list[3]:
+            board[4][4] = not detect_on_off(board, 0, 1)
+            board[4][3] = not detect_on_off(board, 0, 1)
+            board[3][4] = not detect_on_off(board, 0, 1)
+              
+        else:
+            board[4][column] = not detect_on_off(board, 0, 1)
+            board[4][column - 1] = not detect_on_off(board, 0, 1)
+            board[0][column + 1] = not detect_on_off(board, 0, 1)
+            board[3][column] = not detect_on_off(board, 0, 1)
+    
+    if bool_list[2] and bool_list
 
     
     
