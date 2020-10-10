@@ -3,15 +3,36 @@
 import random
 
 def main():
-    board = [[False, True, True, True, True],                                                                         [True, True, True, True, True],                                                                         [True, True, True, True, True],                                                                         [True, True, True, True, True],                                                                         [True, True, True, True, True]] 
+    board = [[False, True, True, True, True],       
+            [True, True, True, True, True],           
+            [True, True, True, True, True],          
+            [True, True, True, True, True],    
+            [True, True, True, True, True]] 
     
     print(not detect_on_off(board, 0, 0))
 
 
 def lights_out():
-    row = input("Please choose a row number(0-4): ")
-    column = input("Please choose a column number (0-4): ") 
+    board = create_board()
+    print(board) 
+    while false_in_board(board):
+        row = int(input("Please choose a row number(0-4): "))
+        column = int(input("Please choose a column number (0-4): "))
+        
+        switch_lights(board, row, column)
 
+        print_board(board)
+
+def false_in_board(board):
+    for i in range(5):
+        if False in board[i]:
+            return True
+    
+    return False
+
+def print_board(board):
+    for i in range(5):
+        print(board[i])
 
 # Create a function that randomly generates and displays the board
 def create_board():
@@ -31,6 +52,8 @@ def create_board():
             else:
                 board[row][column] = False
 
+
+
     return board
     
 
@@ -42,37 +65,54 @@ def switch_lights(board, row, column):
         if bool_list[2]:
             board[0][0] = not detect_on_off(board, 0, 0)
             board[0][1] = not detect_on_off(board, 0, 1)
-            board[1][0] = not detect_on_off(board, 0, 2)
+            board[1][0] = not detect_on_off(board, 1, 0)
  
         elif bool_list[3]:
-            board[0][4] = not detect_on_off(board, 0, 1)
-            board[0][3] = not detect_on_off(board, 0, 1)
-            board[1][4] = not detect_on_off(board, 0, 1)
+            board[0][4] = not detect_on_off(board, 0, 4)
+            board[0][3] = not detect_on_off(board, 0, 3)
+            board[1][4] = not detect_on_off(board, 1, 4)
               
         else:
-            board[0][column] = not detect_on_off(board, 0, 1)
-            board[0][column - 1] = not detect_on_off(board, 0, 1)
-            board[0][column + 1] = not detect_on_off(board, 0, 1)
-            board[1][column] = not detect_on_off(board, 0, 1)
+            board[0][column] = not detect_on_off(board, 0, column)
+            board[0][column - 1] = not detect_on_off(board, 0, column - 1)
+            board[0][column + 1] = not detect_on_off(board, 0, column + 1)
+            board[1][column] = not detect_on_off(board, 0, column)
             
-    if bool_list[1]:
+    elif bool_list[1]:
         if bool_list[2]:
-            board[4][0] = not detect_on_off(board, 0, 0)
-            board[4][1] = not detect_on_off(board, 0, 1)
-            board[3][0] = not detect_on_off(board, 0, 2)
+            board[4][0] = not detect_on_off(board, 4, 0)
+            board[4][1] = not detect_on_off(board, 4, 1)
+            board[3][0] = not detect_on_off(board, 3, 0)
  
         elif bool_list[3]:
-            board[4][4] = not detect_on_off(board, 0, 1)
-            board[4][3] = not detect_on_off(board, 0, 1)
-            board[3][4] = not detect_on_off(board, 0, 1)
+            board[4][4] = not detect_on_off(board, 4, 4)
+            board[4][3] = not detect_on_off(board, 4, 3)
+            board[3][4] = not detect_on_off(board, 3, 4)
               
         else:
-            board[4][column] = not detect_on_off(board, 0, 1)
-            board[4][column - 1] = not detect_on_off(board, 0, 1)
-            board[0][column + 1] = not detect_on_off(board, 0, 1)
-            board[3][column] = not detect_on_off(board, 0, 1)
+            board[4][column] = not detect_on_off(board, 4, column)
+            board[4][column - 1] = not detect_on_off(board, 4, column - 1)
+            board[0][column + 1] = not detect_on_off(board, 4, column + 1)
+            board[3][column] = not detect_on_off(board, 3, column)
     
-    if bool_list[2] and bool_list
+    elif bool_list[2] and bool_list[0] == False and bool_list[1] == False:
+        board[row][0] = not detect_on_off(board, row, 0)
+        board[row - 1][0] = not detect_on_off(board, row - 1, 0)
+        board[row + 1][0] = not detect_on_off(board, row + 1, 0)
+        board[row][1] = not detect_on_off(board, row, 1)
+    
+    elif bool_list[3] and bool_list[0] == False and bool_list[1] == False:
+        board[row][4] = not detect_on_off(board, row, 4)
+        board[row - 1][4] = not detect_on_off(board, row - 1, 4)
+        board[row + 1][4] = not detect_on_off(board, row + 1, 4)
+        board[row][3] = not detect_on_off(board, row, 3)
+    
+    else:
+        board[row][column] = not detect_on_off(board, row, column)
+        board[row - 1][column] = not detect_on_off(board, row - 1, column)
+        board[row + 1][column] = not detect_on_off(board, row + 1, column)
+        board[row][column - 1] = not detect_on_off(board, row, column - 1)
+        board[row][column + 1] = not detect_on_off(board, row, column + 1)
 
     
     
@@ -96,5 +136,5 @@ def test_row_column(row, column):
 
 # Create a function which tests a
 
-main()
+lights_out()
 
