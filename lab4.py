@@ -14,7 +14,7 @@ def main():
 
 def lights_out():
     board = create_board()
-    
+ 
     print_board(board) 
     
     while false_in_board(board):
@@ -70,20 +70,59 @@ def print_board(board):
 # Create a function that randomly generates and displays the board
 # True signifies a light that is off, False a light that is on
 def create_board():
-    board = [[], [], [], [], []]
-    
-    for row in range(5): 
-        for column in range(5):
-            on_or_off = random.randint(0,1)
-            
-            if on_or_off == 0:
-                board[row].append(True)
-            else:
-                board[row].append(False)
+    board = starting_board()
 
+    board = random_clicks(board, 20)
 
     return board
+
+def random_clicks(board, number_of_clicks):
+    for click in range(number_of_clicks):
+        random_row = random.randint(0,4)
+        random_column = random.randint(0,4)
+
+        switch_lights(board, random_row, random_column)
+
+
+def starting_board():
+    board1 = [[True, True, True, True, True],
+              [False, True, True, True, True],
+              [False, False, True, True, True],
+              [False, True, True, True, True],
+              [True, True, True, True, True]]
     
+    board2 = [[True, False, False, False, True],
+              [True, True, False, True, True],
+              [True, True, True, True, True],
+              [True, True, True, True, True],
+              [True, True, True, True, True]]
+              
+    board3 = [[True, True, True, True, True],
+              [True, True, True, True, False],
+              [True, True, True, False, False],
+              [True, True, True, True, False],
+              [True, True, True, True, True]]
+
+              
+    board4 = [[True, True, True, True, True],
+              [True, True, True, True, True],
+              [True, True, True, True, True],
+              [True, True, False, True, True],
+              [True, False, False, False, True]]
+
+    which_board = random.randint(0,3)
+    print(which_board)
+    if which_board == 0:
+        return board1
+    
+    elif which_board == 1:
+        return board2
+    
+    elif which_board == 2:
+        return board3
+    
+    elif which_board == 3:
+        return board4
 
 # Create a function which turns the appropriate lights on and off
 def switch_lights(board, row, column):
