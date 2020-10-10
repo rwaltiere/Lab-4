@@ -14,10 +14,19 @@ def main():
 
 def lights_out():
     board = create_board()
-    print(board) 
+    
+    print_board(board) 
+    
     while false_in_board(board):
         row = int(input("Please choose a row number(0-4): "))
+        while not valid_row(row):
+            print("That is not a valid row.")
+            row = int(input("Please choose a row number(0-4): "))
+
         column = int(input("Please choose a column number (0-4): "))
+        while not valid_column(column):
+            print("That is not a valid column.")
+            column = int(input("Please choose a column number(0-4): "))
         
         switch_lights(board, row, column)
 
@@ -30,28 +39,47 @@ def false_in_board(board):
     
     return False
 
-def print_board(board):
-    for i in range(5):
-        print(board[i])
+def valid_row(row):
+    return row in range(5)
 
-# Create a function that randomly generates and displays the board
-def create_board():
-    board = [[True, True, True, True, True], 
-             [True, True, True, True, True], 
-             [True, True, True, True, True],
-             [True, True, True, True, True], 
-             [True, True, True, True, True]]
-    
+def valid_column(column):
+    return column in range(5)
+
+def print_board(board):
+    display_board = [[], [], [], [], []]
 
     for row in range(5):
+        for column in range(5):
+            if board[row][column] == True:
+                display_board[row].append("\N{WHITE SQUARE}")
+            else:
+                display_board[row].append("\N{BLACK SQUARE}")
+       
+    print("\n")
+    
+    for row in range(5):
+        print("\t", row, "", *display_board[row], sep = '  ')
+    
+    column = [0, 1, 2, 3, 4] 
+    print("\n", "\t", "   ", *column, sep = '  ')
+
+    print("\n")
+    
+    return None
+
+# Create a function that randomly generates and displays the board
+# True signifies a light that is off, False a light that is on
+def create_board():
+    board = [[], [], [], [], []]
+    
+    for row in range(5): 
         for column in range(5):
             on_or_off = random.randint(0,1)
             
             if on_or_off == 0:
-                board[row][column] = True
+                board[row].append(True)
             else:
-                board[row][column] = False
-
+                board[row].append(False)
 
 
     return board
@@ -76,7 +104,7 @@ def switch_lights(board, row, column):
             board[0][column] = not detect_on_off(board, 0, column)
             board[0][column - 1] = not detect_on_off(board, 0, column - 1)
             board[0][column + 1] = not detect_on_off(board, 0, column + 1)
-            board[1][column] = not detect_on_off(board, 0, column)
+            board[1][column] = not detect_on_off(board, 1, column)
             
     elif bool_list[1]:
         if bool_list[2]:
@@ -92,7 +120,7 @@ def switch_lights(board, row, column):
         else:
             board[4][column] = not detect_on_off(board, 4, column)
             board[4][column - 1] = not detect_on_off(board, 4, column - 1)
-            board[0][column + 1] = not detect_on_off(board, 4, column + 1)
+            board[4][column + 1] = not detect_on_off(board, 4, column + 1)
             board[3][column] = not detect_on_off(board, 3, column)
     
     elif bool_list[2] and bool_list[0] == False and bool_list[1] == False:
