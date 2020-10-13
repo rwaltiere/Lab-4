@@ -17,6 +17,7 @@ def lights_out():
  
     print_board(board) 
     
+    number_of_moves = 0
     while false_in_board(board):
         row = int(input("Please choose a row number(0-4): "))
         while not valid_row(row):
@@ -31,6 +32,10 @@ def lights_out():
         switch_lights(board, row, column)
 
         print_board(board)
+
+        number_of_moves += 1
+
+    print("Congratulations! You solved the puzzle in, ", number_of_moves, "moves.")
 
 def false_in_board(board):
     for i in range(5):
@@ -77,11 +82,14 @@ def create_board():
     return board
 
 def random_clicks(board, number_of_clicks):
+    
     for click in range(number_of_clicks):
         random_row = random.randint(0,4)
         random_column = random.randint(0,4)
 
         switch_lights(board, random_row, random_column)
+
+    return board
 
 
 def starting_board():
@@ -111,7 +119,7 @@ def starting_board():
               [True, False, False, False, True]]
 
     which_board = random.randint(0,3)
-    print(which_board)
+    
     if which_board == 0:
         return board1
     
@@ -201,7 +209,6 @@ def test_row_column(row, column):
 
     
 
-# Create a function which tests a
 
 lights_out()
 
